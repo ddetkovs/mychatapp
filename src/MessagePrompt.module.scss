@@ -17,7 +17,7 @@ $message-input-color: #2e77a4;
     flex-direction: row;
     padding-bottom: 8px;
     padding-top: 8px;
-    
+
     input {
       flex-basis: 80%;
       flex-shrink: 2;
@@ -29,7 +29,8 @@ $message-input-color: #2e77a4;
       padding: 0 10px;
       color: $message-input-color;
       margin-right: 8px;
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         box-shadow: 0 0 0 0.2rem rgba($message-input-color, 0.3);
       }
     }
@@ -49,6 +50,9 @@ $message-input-color: #2e77a4;
       &:active {
         background-color: adjust-color($color: $send-message-button-color, $lightness: -5%);
         box-shadow: 0 0 0 0.2rem rgba($send-message-button-color, 0.3);
+      }
+      &:disabled {
+        background-color: adjust-color($color: $send-message-button-color, $lightness: 10%);
       }
     }
   }
