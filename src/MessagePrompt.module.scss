@@ -1,5 +1,42 @@
-.message-prompt-container {
+.message-prompt-bar-container {
   width: 100%;
   min-height: 60px;
   background-color: #3798d4;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  form {
+    max-width: 640px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    
+    input {
+      flex-basis: 80%;
+      flex-shrink: 2;
+      border-radius: 5px;
+      border-color: #2e77a4;
+      border-width: 2px;
+      border-style: solid;
+      outline: none;
+      padding: 0 10px;
+      color: #2e77a4;
+      margin-right: 8px;
+    }
+
+    button {
+      color: #ffffff;
+      flex-basis: 20%;
+      flex-shrink: 1;
+      background-color: #ff876d;
+      border: none;
+      border-radius: 5px;
+      padding: 16px;
+      margin-left: 8px;
+    }
+  }
 }
