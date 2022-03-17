@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import styles from './MessageFeed.module.scss';
 
@@ -32,8 +33,10 @@ const messages: Messages = [
 ];
 
 const MessageEntry = ({ message }: { message: Message }) => {
+  const isSelf = message.author === 'Me';
+
   return (
-    <div className={styles['message-entry']}>
+    <div className={classNames(styles['message-entry'], { [styles['own-message']]: isSelf })}>
       <p>{message.author}</p>
       <p>{message.message}</p>
       <p>{message.timestamp}</p>

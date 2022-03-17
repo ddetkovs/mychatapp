@@ -29,6 +29,11 @@ $message-padding: $message-margin;
       padding: $message-padding;
       min-width: 120px;
       max-width: 70%;
+
+      &.own-message {
+        background-color: #fcf6c5;
+        align-self: flex-end;
+      }
     }
   }
 }
