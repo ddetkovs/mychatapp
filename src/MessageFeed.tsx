@@ -44,9 +44,11 @@ const MessageEntry = ({ message }: { message: Message }) => {
 export const MessageFeed = () => {
   return (
     <div className={styles['message-feed-container']}>
-      {messages.map((message) => (
-        <MessageEntry key={message._id} message={message}></MessageEntry>
-      ))}
+      <div className={styles['message-feed']}>
+        {messages.map((message) => (
+          <MessageEntry key={message._id} message={message}></MessageEntry>
+        ))}
+      </div>
     </div>
   );
 };
