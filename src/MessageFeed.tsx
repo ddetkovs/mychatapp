@@ -37,9 +37,9 @@ const MessageEntry = ({ message }: { message: Message }) => {
 
   return (
     <div className={classNames(styles['message-entry'], { [styles['own-message']]: isSelf })}>
-      <p>{message.author}</p>
-      <p>{message.message}</p>
-      <p>{message.timestamp}</p>
+      <p className={styles['message-details']}>{message.author}</p>
+      <p className={styles['message-body']}>{message.message}</p>
+      <p className={styles['message-details']}>{message.timestamp}</p>
     </div>
   );
 };

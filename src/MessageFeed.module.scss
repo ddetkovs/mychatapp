@@ -34,6 +34,16 @@ $message-padding: $message-margin;
         background-color: #fcf6c5;
         align-self: flex-end;
       }
+      .message-details {
+        color: #b3bcc3;
+        font-size: 14px;
+      }
+      .message-body {
+        margin: 5px 0;
+      }
+      p {
+        margin: 0;
+      }
     }
   }
 }
