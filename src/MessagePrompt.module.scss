@@ -1,3 +1,6 @@
+$send-message-button-color: #ff876d;
+$message-input-color: #2e77a4;
+
 .message-prompt-bar-container {
   width: 100%;
   min-height: 60px;
@@ -19,15 +22,15 @@
       flex-basis: 80%;
       flex-shrink: 2;
       border-radius: 5px;
-      border-color: #2e77a4;
+      border-color: $message-input-color;
       border-width: 2px;
       border-style: solid;
       outline: none;
       padding: 0 10px;
-      color: #2e77a4;
+      color: $message-input-color;
       margin-right: 8px;
       &:hover, &:focus {
-        box-shadow: 0 0 0 0.2rem rgba(#2e77a4, 0.3);
+        box-shadow: 0 0 0 0.2rem rgba($message-input-color, 0.3);
       }
     }
 
@@ -35,11 +38,18 @@
       color: #ffffff;
       flex-basis: 20%;
       flex-shrink: 1;
-      background-color: #ff876d;
+      background-color: $send-message-button-color;
       border: none;
       border-radius: 5px;
       padding: 16px;
       margin-left: 8px;
+      &:hover {
+        background-color: adjust-color($color: $send-message-button-color, $lightness: -5%);
+      }
+      &:active {
+        background-color: adjust-color($color: $send-message-button-color, $lightness: -5%);
+        box-shadow: 0 0 0 0.2rem rgba($send-message-button-color, 0.3);
+      }
     }
   }
 }
