@@ -11,7 +11,11 @@ function App() {
     <UserContext.Provider value={userName}>
       <div className={AppStyles['my-chat-app']}>
         <MessageFeed></MessageFeed>
-        <MessagePrompt></MessagePrompt>
+        <MessagePrompt
+          sendMessage={(message) => {
+            alert(message);
+          }}
+        ></MessagePrompt>
       </div>
     </UserContext.Provider>
   );
