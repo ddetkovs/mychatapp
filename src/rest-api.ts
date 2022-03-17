@@ -12,7 +12,7 @@ const ENDPOINT_URL = `https://chatty.kubernetes.doodle-test.com/api/chatty/v1.0`
 const handleError = (error: unknown) => {
 };
 
-export const getMessages = async () => {
+export const getMessages = async (): Promise<RestMessage[] | undefined> => {
   try {
     if (!apiToken) {
       throw Error('API token is incorrect');
@@ -23,10 +23,11 @@ export const getMessages = async () => {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : '';
     alert('Could not load messages. ' + errorMessage);
+    return undefined;
   }
 };
 
-export const sendMessage = async (message: Pick<RestMessage, 'message' | 'author'>) => {
+export const sendMessage = async (message: Pick<RestMessage, 'message' | 'author'>): Promise<RestMessage | undefined> => {
   try {
     if (!apiToken) {
       throw Error('API token is incorrect');
@@ -39,10 +40,13 @@ export const sendMessage = async (message: Pick<RestMessage, 'message' | 'author
       method: 'POST',
       body: JSON.stringify(message),
     });
-    const result = await response.json();
-    return result;
+    const result = (await response.json()) as RestMessage;
+
+    return { ...result, timestamp: Number(result.timestamp) };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : '';
     alert('Could not send message. ' + errorMessage);
+
+    return undefined;
   }
 };

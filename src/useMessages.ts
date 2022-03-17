@@ -1,17 +1,17 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from './App';
-import { getMessages, RestMessage } from './rest-api';
+import * as Rest from './rest-api';
+import type { RestMessage } from './rest-api';
 
 export type SentMessage = RestMessage & { sending: boolean };
 export type Message = RestMessage | SentMessage;
 
 export type Messages = RestMessage[];
 
-const createDummyMessage = (message: Partial<RestMessage>): RestMessage => ({
+const createNewSentMessage = (message: Pick<Message, 'message' | 'author'>): Message => ({
   timestamp: Date.now(),
-  author: 'Me',
-  message: 'message',
   _id: Math.random() + '',
+  sending: true,
   ...message,
 });
 
@@ -19,26 +19,39 @@ export const useMesssages = (pollingInterval = 10000) => {
   var userName = useContext(UserContext);
   const [messages, setMessages] = useState<Messages>([]);
 
-  let currentTimeout: ReturnType<typeof setTimeout>;
+  let timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const poll = async () => {
-    const loadedMessages = await getMessages();
+    const loadedMessages = await Rest.getMessages();
     if (loadedMessages) {
       setMessages(loadedMessages);
     }
 
-    currentTimeout = setTimeout(poll, pollingInterval);
+    timeout.current = setTimeout(poll, pollingInterval);
   };
 
   useEffect(() => {
     poll();
     return () => {
-      clearTimeout(currentTimeout);
+      timeout.current && clearTimeout(timeout.current);
     };
-  });
+  }, []);
 
-  const sendMessage = (messageBody: string) => {
-    setMessages((oldMessages) => oldMessages.concat([createDummyMessage({ author: userName, message: messageBody })]));
+  const sendMessage = async (messageBody: string) => {
+    const messageDetails = {
+      message: messageBody,
+      author: userName,
+    };
+    const newLocalMessage = createNewSentMessage(messageDetails);
+    setMessages((oldMessages) => oldMessages.concat(newLocalMessage));
+    const sentMessage = await Rest.sendMessage(messageDetails);
+    if (sentMessage) {
+      setMessages((oldMessages) =>
+        oldMessages.filter((message) => message._id !== newLocalMessage._id).concat(sentMessage)
+      );
+    } else {
+      setMessages((oldMessages) => oldMessages.filter((message) => message._id !== newLocalMessage._id));
+    }
   };
   return { messages: messages, sendMessage: sendMessage };
 };
