@@ -1,10 +1,13 @@
 import React from 'react';
-import './App.css';
+import AppStyles from './App.module.scss';
+import { MessageFeed } from './MessageFeed';
+import { MessagePrompt } from './MessagePrompt';
 
 function App() {
   return (
-    <div>
-
+    <div className={AppStyles['my-chat-app']}>
+      <MessageFeed></MessageFeed>
+      <MessagePrompt></MessagePrompt>
     </div>
   );
 }
