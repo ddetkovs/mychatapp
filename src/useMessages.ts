@@ -1,36 +1,13 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from './App';
+import { getMessages, RestMessage } from './rest-api';
 
-export type Message = {
-  _id: string;
-  message: string;
-  author: string;
-  timestamp: number;
-};
+export type SentMessage = RestMessage & { sending: boolean };
+export type Message = RestMessage | SentMessage;
 
-export type Messages = Message[];
+export type Messages = RestMessage[];
 
-const dummyMessages: Messages = [
-  {
-    _id: '61b046a648c220001b5f6c7f',
-    message: 'Hello world',
-    author: 'Tom',
-    timestamp: 1638942374690,
-  },
-  {
-    _id: '61b04b3148c220001b5f6c80',
-    message: 'Test message',
-    author: 'RandomUser',
-    timestamp: 1638943537253,
-  },
-  {
-    _id: '61b05ae748c220001b5f6c81',
-    message: 'Messages are tested',
-    author: 'Me',
-    timestamp: 1638947559815,
-  },
-];
-const createDummyMessage = (message: Partial<Message>): Message => ({
+const createDummyMessage = (message: Partial<RestMessage>): RestMessage => ({
   timestamp: Date.now(),
   author: 'Me',
   message: 'message',
@@ -38,9 +15,27 @@ const createDummyMessage = (message: Partial<Message>): Message => ({
   ...message,
 });
 
-export const useMesssages = () => {
+export const useMesssages = (pollingInterval = 10000) => {
   var userName = useContext(UserContext);
-  const [messages, setMessages] = useState<Messages>(dummyMessages);
+  const [messages, setMessages] = useState<Messages>([]);
+
+  let currentTimeout: ReturnType<typeof setTimeout>;
+
+  const poll = async () => {
+    const loadedMessages = await getMessages();
+    if (loadedMessages) {
+      setMessages(loadedMessages);
+    }
+
+    currentTimeout = setTimeout(poll, pollingInterval);
+  };
+
+  useEffect(() => {
+    poll();
+    return () => {
+      clearTimeout(currentTimeout);
+    };
+  });
 
   const sendMessage = (messageBody: string) => {
     setMessages((oldMessages) => oldMessages.concat([createDummyMessage({ author: userName, message: messageBody })]));
