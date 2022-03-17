@@ -1,5 +1,22 @@
+$message-margin: 16px;
+$message-padding: $message-margin;
 
-.message-feed-container{
+.message-feed-container {
   width: 100%;
   flex-basis: 100%;
+
+  .message-entry {
+    color: #434b54;
+    background-color: #ffffff;
+    border-color: #d4dade;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    align-self: flex-start;
+    margin-top: $message-margin;
+    margin-bottom: $message-margin;
+    padding: $message-padding;
+    min-width: 120px;
+    max-width: 70%;
+  }
 }
