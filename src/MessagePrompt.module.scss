@@ -26,6 +26,9 @@
       padding: 0 10px;
       color: #2e77a4;
       margin-right: 8px;
+      &:hover, &:focus {
+        box-shadow: 0 0 0 0.2rem rgba(#2e77a4, 0.3);
+      }
     }
 
     button {
