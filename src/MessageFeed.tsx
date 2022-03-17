@@ -32,6 +32,15 @@ const messages: Messages = [
   },
 ];
 
+const dateTimeFormatter = Intl.DateTimeFormat('default', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+});
+const formatTimestamp = (timestamp: number) => dateTimeFormatter.format(new Date(timestamp));
+
 const MessageEntry = ({ message }: { message: Message }) => {
   const isSelf = message.author === 'Me';
 
@@ -39,7 +48,7 @@ const MessageEntry = ({ message }: { message: Message }) => {
     <div className={classNames(styles['message-entry'], { [styles['own-message']]: isSelf })}>
       <p className={styles['message-details']}>{message.author}</p>
       <p className={styles['message-body']}>{message.message}</p>
-      <p className={styles['message-details']}>{message.timestamp}</p>
+      <p className={styles['message-details']}>{formatTimestamp(message.timestamp)}</p>
     </div>
   );
 };
