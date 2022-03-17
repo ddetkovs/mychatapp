@@ -30,6 +30,9 @@ $message-padding: $message-margin;
       min-width: 120px;
       max-width: 70%;
 
+      &.sending {
+        opacity: 0.8;
+      }
       &.own-message {
         background-color: #fcf6c5;
         align-self: flex-end;
