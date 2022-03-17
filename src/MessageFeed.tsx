@@ -1,5 +1,6 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from './App';
 import styles from './MessageFeed.module.scss';
 
 type Message = {
@@ -42,7 +43,8 @@ const dateTimeFormatter = Intl.DateTimeFormat('default', {
 const formatTimestamp = (timestamp: number) => dateTimeFormatter.format(new Date(timestamp));
 
 const MessageEntry = ({ message }: { message: Message }) => {
-  const isSelf = message.author === 'Me';
+  const userName = useContext(UserContext);
+  const isSelf = message.author === userName;
 
   return (
     <div className={classNames(styles['message-entry'], { [styles['own-message']]: isSelf })}>
