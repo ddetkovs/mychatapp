@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { useContext, useEffect, useRef } from 'react';
 import { UserContext } from './App';
 import styles from './MessageFeed.module.scss';
-import { isMessageSending, Message, Messages, SentMessage } from './useMessages';
+import { isMessageSending, Message, Messages } from './useMessages';
 
 const dateTimeFormatter = Intl.DateTimeFormat('default', {
   year: 'numeric',
@@ -12,7 +12,6 @@ const dateTimeFormatter = Intl.DateTimeFormat('default', {
   minute: 'numeric',
 });
 const formatTimestamp = (timestamp: number) => dateTimeFormatter.format(new Date(timestamp));
-
 
 const MessageEntry = ({ message }: { message: Message }) => {
   const userName = useContext(UserContext);
