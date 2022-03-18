@@ -1,6 +1,8 @@
 $message-margin: 16px;
 $message-padding: $message-margin;
 
+@use 'devices';
+
 .message-feed-container {
   width: 100%;
   flex-basis: 100%;
@@ -16,6 +18,10 @@ $message-padding: $message-margin;
     flex-direction: column;
     margin: 0 24px;
 
+    @include devices.on-small-devices() {
+      margin: 0 0;
+    }
+
     .message-entry {
       color: #434b54;
       background-color: #ffffff;
@@ -29,6 +35,11 @@ $message-padding: $message-margin;
       padding: $message-padding;
       min-width: 120px;
       max-width: 70%;
+
+      @include devices.on-small-devices() {
+        margin-left: 8px;
+        margin-right: 8px;
+      }
 
       &.sending {
         opacity: 0.8;

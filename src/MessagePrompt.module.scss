@@ -1,6 +1,8 @@
 $send-message-button-color: #ff876d;
 $message-input-color: #2e77a4;
 
+@use 'devices';
+
 .message-prompt-bar-container {
   width: 100%;
   min-height: 60px;
@@ -17,6 +19,11 @@ $message-input-color: #2e77a4;
     flex-direction: row;
     padding-bottom: 8px;
     padding-top: 8px;
+
+    @include devices.on-small-devices() {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
 
     input {
       flex-basis: 80%;

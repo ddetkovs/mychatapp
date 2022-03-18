@@ -1,0 +1,6 @@
+$media-breakpoint-medium: 768px;
+@mixin on-small-devices () {
+  @media all and (max-width: $media-breakpoint-medium) { 
+    @content;
+  }
+}
