@@ -27,9 +27,9 @@ export const useMesssages = (pollingInterval = 1000) => {
 
   const poll = async () => {
     const loadedMessages = await Rest.getMessages(lastMessageTimestamp.current);
-    if (loadedMessages) {
+    if (loadedMessages && loadedMessages.length) {
       setMessages((oldMessages) => {
-        var loadedIds = new Set(loadedMessages.map(message => message._id));
+        var loadedIds = new Set(loadedMessages.map((message) => message._id));
         oldMessages = oldMessages.filter((message) => !loadedIds.has(message._id));
         return oldMessages.concat(loadedMessages).sort((a, b) => a.timestamp - b.timestamp);
       });
