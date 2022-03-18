@@ -9,15 +9,12 @@ const apiToken = process.env.REACT_APP_API_TOKEN;
 
 const ENDPOINT_URL = `https://chatty.kubernetes.doodle-test.com/api/chatty/v1.0`;
 
-const handleError = (error: unknown) => {
-};
-
-export const getMessages = async (): Promise<RestMessage[] | undefined> => {
+export const getMessages = async (after: number = 0): Promise<RestMessage[] | undefined> => {
   try {
     if (!apiToken) {
       throw Error('API token is incorrect');
     }
-    const response = await fetch(`${ENDPOINT_URL}/?token=${apiToken}`);
+    const response = await fetch(`${ENDPOINT_URL}/?token=${apiToken}&since=${after}`);
     const messages = (await response.json()) as RestMessage[];
     return messages;
   } catch (error) {
@@ -27,7 +24,9 @@ export const getMessages = async (): Promise<RestMessage[] | undefined> => {
   }
 };
 
-export const sendMessage = async (message: Pick<RestMessage, 'message' | 'author'>): Promise<RestMessage | undefined> => {
+export const sendMessage = async (
+  message: Pick<RestMessage, 'message' | 'author'>
+): Promise<RestMessage | undefined> => {
   try {
     if (!apiToken) {
       throw Error('API token is incorrect');

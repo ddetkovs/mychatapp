@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { useContext } from 'react';
 import { UserContext } from './App';
 import styles from './MessageFeed.module.scss';
-import { Message, Messages, SentMessage } from './useMessages';
+import { isMessageSending, Message, Messages, SentMessage } from './useMessages';
 
 const dateTimeFormatter = Intl.DateTimeFormat('default', {
   year: 'numeric',
@@ -13,9 +13,6 @@ const dateTimeFormatter = Intl.DateTimeFormat('default', {
 });
 const formatTimestamp = (timestamp: number) => dateTimeFormatter.format(new Date(timestamp));
 
-const isMessageSending = (message: Message): message is SentMessage => {
-  return (message as SentMessage).sending === true;
-}
 
 const MessageEntry = ({ message }: { message: Message }) => {
   const userName = useContext(UserContext);
